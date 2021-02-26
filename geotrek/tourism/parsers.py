@@ -12,9 +12,6 @@ from geotrek.common.parsers import (AttachmentParserMixin, Parser,
                                     TourInSoftParser)
 from geotrek.tourism.models import TouristicContent, TouristicEvent, TouristicContentType1, TouristicContentType2
 
-if 'modeltranslation' in settings.INSTALLED_APPS:
-    from modeltranslation.translator import translator
-
 
 class TouristicContentMixin:
     # Mixin which handle multiple type1/2 with the same name in different categories
