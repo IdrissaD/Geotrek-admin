@@ -511,7 +511,7 @@ Override translations
 
 Translations are managed by https://weblate.makina-corpus.net/ where you can contribute.
 But you can also override default translation files available in each module
-(for example those from trekking module available in ``/opt/geotrek-admin/lib/python3.6/site-packages/geotrek/trekking/locale/fr/LC_MESSAGES/django.po``).
+(for example those from trekking module available in ``/opt/geotrek-admin/lib/python3.8/site-packages/geotrek/trekking/locale/fr/LC_MESSAGES/django.po``).
 
 Don't edit these default files, use them to find which words you want to override.
 

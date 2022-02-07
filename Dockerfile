@@ -1,5 +1,4 @@
-ARG BASE_IMAGE_TAG=focal-3.8
-FROM makinacorpus/geodjango:${BASE_IMAGE_TAG}
+FROM makinacorpus/geodjango:focal-3.8
 
 ENV ENV=prod
 ENV SERVER_NAME="localhost"
@@ -41,7 +40,7 @@ RUN apt-get update -qq && apt-get install -y -qq  \
     apt-get clean all && rm -rf /var/lib/apt/lists/* && rm -rf /var/cache/apt/*
 
 COPY requirements.txt requirements.txt
-RUN python3 -m venv /opt/venv
+RUN python3.8 -m venv /opt/venv
 RUN /opt/venv/bin/pip install -U pip setuptools wheel
 RUN /opt/venv/bin/pip install --no-cache-dir -r requirements.txt -U
 

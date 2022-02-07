@@ -204,7 +204,7 @@ msgstr ""
 #: ../../installation.rst:83
 msgid ""
 "The Geotrek-admin Python application is located in ``/opt/geotrek-"
-"admin/lib/python3.6/site-packages/geotrek`` directory"
+"admin/lib/python3.8/site-packages/geotrek`` directory"
 msgstr ""
 
 #: ../../installation.rst:87
