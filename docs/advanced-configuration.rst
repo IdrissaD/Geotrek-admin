@@ -1507,7 +1507,6 @@ A (nearly?) exhaustive list of attributes available for display and export as co
         "uuid",
     ]
     COLUMNS_LISTS["landedge_view"] = [
-        "land_type",
         "min_elevation",
         "max_elevation",
         "date_update",
