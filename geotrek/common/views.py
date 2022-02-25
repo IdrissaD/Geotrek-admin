@@ -34,7 +34,6 @@ from paperclip import settings as settings_paperclip
 
 from geotrek.celery import app as celery_app
 from geotrek.common.forms import AttachmentAccessibilityForm
-from geotrek.common.mixins import transform_pdf_booklet_callback
 from geotrek.common.utils import sql_extent
 from geotrek.common.models import FileType, Attachment, TargetPortal, AccessibilityAttachment
 from geotrek import __version__
@@ -51,6 +50,7 @@ from zipfile import ZipFile
 
 from datetime import timedelta
 
+from .mixins.views import BookletMixin
 from .permissions import PublicOrReadPermMixin
 from .utils.import_celery import create_tmp_destination, discover_available_parsers
 
@@ -190,14 +190,6 @@ class DocumentPublicMixin:
         modelname = self.get_model()._meta.object_name.lower()
         context['mapimage_ratio'] = settings.EXPORT_MAP_IMAGE_SIZE[modelname]
         return context
-
-
-class BookletMixin:
-
-    def get(self, request, pk, slug, lang=None):
-        response = super().get(request, pk, slug)
-        response.add_post_render_callback(transform_pdf_booklet_callback)
-        return response
 
 
 class DocumentPublic(PublicOrReadPermMixin, DocumentPublicMixin, mapentity_views.MapEntityDocumentWeasyprint):
