@@ -8,6 +8,7 @@ CHANGELOG
 **Minor improvements**
 
 - Show all infrastructures and signages on interventions
+- Add length 2d for land's app for exports and lists
 
 **Bug fixes**
 

@@ -1511,7 +1511,7 @@ A (nearly?) exhaustive list of attributes available for display and export as co
             "min_elevation",
             "max_elevation",
             "date_update",
-            "length_2d",
+            "length_2d_m",
             "date_insert",
             "owner",
             "agreement",
@@ -1836,6 +1836,7 @@ A (nearly?) exhaustive list of attributes available for display and export as co
             "uuid",
         ],
     COLUMNS_LISTS["landedge_export"] = [
+            "length_2d_m",
             "land_type",
             "owner",
             "agreement",
