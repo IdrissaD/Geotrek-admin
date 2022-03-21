@@ -97,6 +97,7 @@ class CommonForm(MapEntityForm):
         if issubclass(model, NoDeleteMixin):
             field.queryset = field.queryset.filter(deleted=False)
 
+
     def __init__(self, *args, **kwargs):
 
         # Get settings key for this Form
@@ -132,27 +133,25 @@ class CommonForm(MapEntityForm):
 
     def clean(self):
         structure = self.cleaned_data.get('structure')
-        if not structure:
-            return self.cleaned_data
-
-        # Copy cleaned_data because self.add_error may remove an item
-        for name, field in self.cleaned_data.copy().items():
-            try:
-                modelfield = self.instance._meta.get_field(name)
-            except FieldDoesNotExist:
-                continue
-            if not isinstance(modelfield, (ForeignKey, ManyToManyField)):
-                continue
-            model = modelfield.remote_field.model
-            if not issubclass(model, (StructureRelated, StructureOrNoneRelated)):
-                continue
-            if not model.check_structure_in_forms:
-                continue
-            if isinstance(field, QuerySet):
-                for value in field:
-                    self.check_structure(value, structure, name)
-            else:
-                self.check_structure(field, structure, name)
+        if structure:
+            # Copy cleaned_data because self.add_error may remove an item
+            for name, field in self.cleaned_data.copy().items():
+                try:
+                    modelfield = self.instance._meta.get_field(name)
+                except FieldDoesNotExist:
+                    continue
+                if not isinstance(modelfield, (ForeignKey, ManyToManyField)):
+                    continue
+                model = modelfield.remote_field.model
+                if not issubclass(model, (StructureRelated, StructureOrNoneRelated)):
+                    continue
+                if not model.check_structure_in_forms:
+                    continue
+                if isinstance(field, QuerySet):
+                    for value in field:
+                        self.check_structure(value, structure, name)
+                else:
+                    self.check_structure(field, structure, name)
 
         # If COMPLETENESS_MODE is 'error_on_publication', set completeness fields required
         translated_fields = get_translated_fields(self._meta.model)
