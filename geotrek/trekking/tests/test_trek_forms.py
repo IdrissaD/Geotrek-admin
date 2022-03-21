@@ -97,9 +97,11 @@ class TreckCompletenessTest(TestCase):
 
         with override_settings(COMPLETENESS_MODE='error_on_publication'):
             form = TrekForm(user=self.user, instance=self.trek, data=data)
-            form.is_valid()
-            form.clean()
 
+            self.assertFalse(form.is_valid())
+            with self.assertRaisesRegex(ValidationError,
+                                        'Fields are missing to publish object: practice, departure_fr, duration, difficulty, description_teaser_fr'):
+                form.clean()
 
 class TrekItinerancyTestCase(TestCase):
     @classmethod

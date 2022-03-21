@@ -157,21 +157,24 @@ class CommonForm(MapEntityForm):
         translated_fields = get_translated_fields(self._meta.model)
 
         if 'published' in translated_fields and self.instance.any_published and settings.COMPLETENESS_LEVEL == 'error_on_publication':
-            self.completeness_fields = settings.COMPLETENESS_FIELDS.get(self._meta.model._meta.model_name, [])
-            if self.completeness_fields:
+            completeness_fields = settings.COMPLETENESS_FIELDS.get(self._meta.model._meta.model_name, [])
+
+            if completeness_fields:
                 msg = _('This field is required to publish object.')
                 missing_fields = []
-                for field_required in self.completeness_fields:
+                for field_required in completeness_fields:
                     if field_required in translated_fields:
                         field_required = f'{field_required}_fr'
-                    if not self.cleaned_data[field_required]:
+                    if not self.cleaned_data.get(field_required):
                         self.add_error(field_required, msg)
                         missing_fields.append(field_required)
+
                 if missing_fields:
                     raise ValidationError(
                         _('Fields are missing to publish object: %(fields)s'),
                         params={'fields': ', '.join(missing_fields)},
                     )
+
         return self.cleaned_data
 
     def check_structure(self, obj, structure, name):
